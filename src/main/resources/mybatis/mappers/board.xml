@@ -14,9 +14,36 @@
 		order by reg_date desc
 	</select>
 	
-	<insert id="BoardInsert" parameterType="com.javaex.vo.BoardVo">
+	<select id="read" resultType="com.javaex.vo.BoardVo">
+		select 	bo.no
+			   	,title
+				,content
+				,hit
+				,to_char(reg_date, 'yy-mm-dd hh24:mi') regDate
+			 	,user_no userNo
+				,ue.name userName
+		from   	board bo, users ue
+		where  	bo.user_no = ue.no
+		and 	bo.no = #{no}
+	</select>
+	
+	<insert id="insert" parameterType="com.javaex.vo.BoardVo">
 		insert into board
-		values(SEQ_BOARD_NO.nextval, #{title}, #{content}, 0, #{reg_date}, #{user_no})
+		values(SEQ_BOARD_NO.nextval, #{title}, #{content}, 0, sysdate, #{userNo})
 	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from board
+		where no = #{no}
+	</delete>
+	
+	<update id="update" parameterType="com.javaex.vo.BoardVo">
+		update board
+		set    title = #{title}
+			   ,content = #{content}
+	    where  no = #{no}
+	</update>
+	
+	
 	
 </mapper>

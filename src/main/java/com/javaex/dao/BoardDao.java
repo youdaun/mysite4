@@ -21,5 +21,33 @@ public class BoardDao {
 		return sqlSession.selectList("board.getList", boardVo);
 
 	}
+	
+	//글저장
+	public int boardInsert(BoardVo boardVo) {
+		System.out.println("[BoardDao.boardInsert()]");
+		
+		return sqlSession.insert("board.insert", boardVo);
+	}
+	
+	//글삭제
+	public int boardDelete(int no) {
+		System.out.println("[BoardDao.boardDelete()]");
+		
+		return sqlSession.delete("board.delete", no);
+	}
+	
+	//글읽기
+	public BoardVo read(int no) {
+		System.out.println("[BoardDao.read()]");
+		
+		return sqlSession.selectOne("board.read", no);
+	}
+	
+	//글수정
+	public int boardUpdate(BoardVo boardVo) {
+		System.out.println("[BoardDao.boardUpdate()]");
+		
+		return sqlSession.update("board.update", boardVo);
+	}
 
 }

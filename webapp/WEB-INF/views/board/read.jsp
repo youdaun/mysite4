@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="/mysite/assets/css/mysite.css" rel="stylesheet" type="text/css">
-<link href="/mysite/assets/css/board.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/board.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -77,7 +77,7 @@
 							</div>
 							
 							<c:if test="${bvo.userNo == authUser.no}">
-							<a id="btn_modify" href="/mysite/board?action=modifyForm&no=${bvo.no}">수정</a>
+							<a id="btn_modify" href="${pageContext.request.contextPath}/board/modifyForm?no=${bvo.no}">수정</a>
 							</c:if>
 							
 							<a id="btn_modify" href="">목록</a>

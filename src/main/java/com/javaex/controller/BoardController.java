@@ -7,10 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVo;
 
+@RequestMapping("/board")
 @Controller
 public class BoardController {
 	
@@ -18,7 +20,7 @@ public class BoardController {
 	private BoardService boardService;
 	
 	//방명록 기본리스트 불러오기
-	@RequestMapping(value="/board/list", method= {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/list", method= {RequestMethod.GET, RequestMethod.POST})
 	public String getList(BoardVo boardVo, Model model) {
 		System.out.println("[BoardController.getList()]");
 		
@@ -29,21 +31,67 @@ public class BoardController {
 	}
 	
 	//글쓰기 폼
-	@RequestMapping(value="/board/write", method= {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/writeForm", method= {RequestMethod.GET, RequestMethod.POST})
 	public String writeForm() {
-		System.out.println("[BoardController.write()]");
+		System.out.println("[BoardController.writeForm()]");
 		
 		return "board/writeForm";
 	}
 	
 	//글쓰기
-	@RequestMapping(value="/board/write", method= {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/write", method= {RequestMethod.GET, RequestMethod.POST})
 	public String write(BoardVo boardVo) {
 		System.out.println("[BoardController.write()]");
 		
+		boardService.write(boardVo);
 		
-		
-		return "";
+		return "redirect:/board/list";
 	}
-
+	
+	//글삭제
+	@RequestMapping(value="/delete", method= {RequestMethod.GET, RequestMethod.POST})
+	public String delete(@RequestParam int no) {
+		System.out.println("[BoardController.delete()]");
+		
+		boardService.delete(no);
+		
+		return "redirect:/board/list";
+	}
+	
+	//글읽기
+	@RequestMapping(value="/read", method= {RequestMethod.GET, RequestMethod.POST})
+	public String read(@RequestParam int no, Model model) {
+		System.out.println("[BoardController.read()]");
+		
+		BoardVo bvo = boardService.read(no);
+		model.addAttribute("bvo", bvo);
+		
+		return "board/read";
+	}
+	
+	//글수정폼
+	@RequestMapping(value="/modifyForm", method= {RequestMethod.GET, RequestMethod.POST})
+	public String modifyForm(int no, Model model) {
+		System.out.println("[BoardController.modifyForm()]");
+		
+		BoardVo bvo = boardService.read(no);
+		model.addAttribute("bvo", bvo);
+		
+		return "board/modifyForm";
+	}
+	
+	//글수정
+	@RequestMapping(value="/modify", method= {RequestMethod.GET, RequestMethod.POST})
+	public String modify(BoardVo boardVo) {
+		System.out.println("[BoardController.modify()]");
+		
+		boardService.modify(boardVo);
+		
+		return "redirect:/board/list";
+	}
+	
+	
+	
+	
+	
 }

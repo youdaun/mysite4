@@ -20,5 +20,33 @@ public class BoardService {
 		
 		return boardDao.getList(boardVo);
 	}
+	
+	//글저장
+	public void write(BoardVo boardVo) {
+		System.out.println("[BoardService.write()]");
+		
+		boardDao.boardInsert(boardVo);
+	}
+	
+	//글삭제
+	public void delete(int no) {
+		System.out.println("[BoardService.delete()]");
+		
+		boardDao.boardDelete(no);
+	}
+	
+	//글읽기, 글수정폼
+	public BoardVo read(int no) {
+		System.out.println("[BoardService.read()]");
+		
+		return boardDao.read(no);
+	}
+	
+	//글수정
+	public void modify(BoardVo boardVo) {
+		System.out.println("[BoardService.modify()]");
+		
+		boardDao.boardUpdate(boardVo);
+	}
 
 }
