@@ -49,5 +49,12 @@ public class BoardDao {
 		
 		return sqlSession.update("board.update", boardVo);
 	}
+	
+	//조회수 업데이트
+	public int updateHit(int no) {
+		System.out.println("[BoardDao.updateHit()]");
+		
+		return sqlSession.update("board.updateHit", no);
+	}
 
 }

@@ -48,5 +48,12 @@ public class BoardService {
 		
 		boardDao.boardUpdate(boardVo);
 	}
+	
+	//조회수 업데이트
+	public void updateHit(int no) {
+		System.out.println("[BoardService.updateHit()]");
+		
+		boardDao.updateHit(no);
+	}
 
 }

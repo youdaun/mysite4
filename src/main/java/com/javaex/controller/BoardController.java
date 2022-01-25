@@ -66,6 +66,9 @@ public class BoardController {
 		BoardVo bvo = boardService.read(no);
 		model.addAttribute("bvo", bvo);
 		
+		//조회수 업데이트
+		boardService.updateHit(no);
+		
 		return "board/read";
 	}
 	
@@ -89,8 +92,6 @@ public class BoardController {
 		
 		return "redirect:/board/list";
 	}
-	
-	
 	
 	
 	

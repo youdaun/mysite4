@@ -4,13 +4,15 @@
 <mapper namespace="board">
 
 	<select id="getList" resultType="com.javaex.vo.BoardVo">
-		select no
+		select bo.no
        		   ,title
        		   ,content
        		   ,hit
-       		   ,reg_date regDate
+       		   ,to_char(reg_date, 'yy-mm-dd hh24:mi') regDate
        		   ,user_no userNo
-		from board
+       		   ,ue.name userName
+		from   board bo, users ue
+		where  bo.user_no = ue.no
 		order by reg_date desc
 	</select>
 	
@@ -42,6 +44,12 @@
 		set    title = #{title}
 			   ,content = #{content}
 	    where  no = #{no}
+	</update>
+	
+	<update id="updateHit" parameterType="int">
+		update board
+		set	   hit = hit + 1
+		where  no = #{no}
 	</update>
 	
 	
