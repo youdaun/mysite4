@@ -31,7 +31,7 @@
 		]]>
 	</insert>
 	
-	<update id="updateUser" parameterType="com.javaex.vo.UserVo">
+	<update id="updateUser" parameterType="com.javaex.vo.UserVo" >
 		<![CDATA[
 			update 	users
 			set 	name = #{name}
