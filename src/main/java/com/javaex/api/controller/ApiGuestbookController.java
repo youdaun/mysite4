@@ -46,4 +46,11 @@ public class ApiGuestbookController {
 		
 		return gvo;
 	}
+	
+	@RequestMapping("/remove")
+	public String remove() {
+		System.out.println("[ApiGuestbookController>remove]");
+		
+		return "";
+	}
 }

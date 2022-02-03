@@ -7,10 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.js"></script>
 
 </head>
 
@@ -90,11 +92,39 @@
 
 	</div>
 	<!-- //wrap -->
+	
+
+<!-- 삭제 모달창 -->
+
+<div id="delModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">비밀번호 입력 모달창</h4>
+      </div>
+      <div class="modal-body">
+        
+        비밀번호
+        <input id="modalPassword" type="password" name="password" value=""><br>
+        <input id="modalNo" type="text" name="no" value="">
+        
+        </input>
+        
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        <button id="modalBtnDel" type="button" class="btn btn-danger">삭제</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 </body>
 
 <script type="text/javascript">
-	/* 로딩되기전에 요청 */
+	/* 로딩되기전에 돔이완성됐을때 요청 */
 	$(document).ready(function() {
 
 		/* 리스트 그리기 */
@@ -145,7 +175,59 @@
 		
 	});
 	
+	//삭제팝업 버튼을 눌렀을때
+	$("#listArea").on("click", ".btnDelPop", function(){
+		//데이터수집2222222222222222
+		var $this = $(this);
+		var no = $this.data("no");
+		console.log(no);
+		
+		//초기화
+		$("#modalPassword").val("");
+		$("#modalNo").val(no);
+		
+		$('#delModal').modal('show');
+		
+	});
 	
+	//모달창의 삭제버튼을 클릭했을때
+	$("#modalBtnDel").on("click", function(){
+		console.log("모달창 삭제버튼 클릭");
+		
+		//데이터 수집
+		var pw = $("#modalPassword").val();
+		var no = $("#modalNo").val();
+		
+		var delInfoVo = {
+			no: no,
+			password: pw
+		}
+		
+		console.log(delInfoVo);
+		
+		//ajax 요청 no password
+		$.ajax({
+
+			url : "${pageContext.request.contextPath}/api/guestbook/remove",
+			type : "post",
+			//contentType : "application/json",
+			data : delInfoVo,
+
+			dataType : "json",
+			success : function(result) {
+				/*성공시 처리해야될 코드 작성*/
+				
+				//화면에서 변경되는 부분 반영
+				//  모달창 닫기
+				//  해당 테이블 html 삭제
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+
+		
+	});
 	
 
 	//리스트 출력(그리기 시키는)
@@ -188,7 +270,7 @@
 		str += '		<td>' + guestbookVo.no + '</td>';
 		str += '		<td>' + guestbookVo.name + '</td>';
 		str += '		<td>' + guestbookVo.regDate + '</td>';
-		str += '		<td><a href="/mysite/guest?action=deleteForm&no=${gvo.no}">[삭제]</a></td>';
+		str += '		<td><button class="btnDelPop" type="button" data-no="'+guestbookVo.no+'">삭제</button></td>';
 		str += '	</tr>';
 		str += '	<tr>';
 		str += '		<td colspan=4 class="text-left">' + guestbookVo.content
