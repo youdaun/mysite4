@@ -214,12 +214,24 @@
 			data : delInfoVo,
 
 			dataType : "json",
-			success : function(result) {
-				/*성공시 처리해야될 코드 작성*/
+			success : function(state) {
+				console.log(state);
 				
-				//화면에서 변경되는 부분 반영
-				//  모달창 닫기
-				//  해당 테이블 html 삭제
+				if(state === 'success'){
+					/*성공시 처리해야될 코드 작성*/
+
+					//  해당 테이블 html 삭제
+					$("#t"+no).remove();
+					
+					//  모달창 닫기
+					$('#delModal').modal('hide');		 
+					
+				}else {
+					$('#delModal').modal('hide');
+					alert("비밀번호를 확인하세요");
+				}
+				
+				
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
@@ -259,7 +271,7 @@
 	function render(guestbookVo, updown) {
 
 		var str = '';
-		str += '<table class="guestRead">';
+		str += '<table id="t'+ guestbookVo.no +'" class="guestRead">';
 		str += '	<colgroup>';
 		str += '		<col style="width: 10%;">';
 		str += '		<col style="width: 40%;">';
@@ -270,7 +282,7 @@
 		str += '		<td>' + guestbookVo.no + '</td>';
 		str += '		<td>' + guestbookVo.name + '</td>';
 		str += '		<td>' + guestbookVo.regDate + '</td>';
-		str += '		<td><button class="btnDelPop" type="button" data-no="'+guestbookVo.no+'">삭제</button></td>';
+		str += '		<td><button class="btnDelPop" type="button" data-no="'+ guestbookVo.no +'">삭제</button></td>';
 		str += '	</tr>';
 		str += '	<tr>';
 		str += '		<td colspan=4 class="text-left">' + guestbookVo.content

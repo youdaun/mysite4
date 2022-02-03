@@ -45,4 +45,17 @@ public class GuestbookService {
 
 		return guestbookDao.delete(guestbookVo);
 	}
+	
+	// ajax 방명록 글 삭제
+	public String remove(GuestbookVo guestbookVo) {
+		System.out.println("guestbookService/remove ajax");
+		
+		int count = guestbookDao.delete(guestbookVo);
+	
+		if(count>0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 }

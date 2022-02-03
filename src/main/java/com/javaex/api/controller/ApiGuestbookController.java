@@ -47,10 +47,16 @@ public class ApiGuestbookController {
 		return gvo;
 	}
 	
+	@ResponseBody
 	@RequestMapping("/remove")
-	public String remove() {
+	public String remove(@ModelAttribute GuestbookVo guestbookVo) {
 		System.out.println("[ApiGuestbookController>remove]");
+		System.out.println(guestbookVo);
 		
-		return "";
+		String result = guestbookService.remove(guestbookVo);
+		//"success" "fail"
+		System.out.println(result);
+		
+		return result;
 	}
 }
