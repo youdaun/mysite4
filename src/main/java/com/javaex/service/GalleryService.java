@@ -59,7 +59,6 @@ public class GalleryService {
 		gvo.setOrgName(orgName);
 		gvo.setSaveName(saveName);
 		gvo.setFileSize(fileSize);
-		gvo.setContent(orgName);
 
 		galleryDao.insertFile(gvo);
 
@@ -68,5 +67,20 @@ public class GalleryService {
 
 	public List<GalleryVo> getList() {
 		return galleryDao.getList();
+	}
+	
+	public GalleryVo getImg(int no) {
+		return galleryDao.getImg(no);
+	}
+	
+	public String delete(int no) {
+		int count= galleryDao.delete(no);
+		
+		if(count>0) {
+			return "s";
+		}
+		else {
+			return "f";
+		}
 	}
 }

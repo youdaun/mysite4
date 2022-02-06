@@ -4,6 +4,7 @@ public class GalleryVo {
 
 	private int no;
 	private int userNo;
+	private String userName;
 	private String content;
 	private String filePath;
 	private String orgName;
@@ -14,7 +15,8 @@ public class GalleryVo {
 		
 	}
 	
-	public GalleryVo(int userNo, String content, String filePath, String orgName, String saveName, long fileSize) {
+	public GalleryVo(int userNo, String userName, String content, String filePath, String orgName, String saveName, long fileSize) {
+		this.userName = userName;
 		this.userNo = userNo;
 		this.content = content;
 		this.filePath = filePath;
@@ -78,6 +80,15 @@ public class GalleryVo {
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
 
 	@Override
 	public String toString() {

@@ -22,4 +22,14 @@ public class GalleryDao {
 
 		return sqlSession.selectList("gallery.getList");
 	}
+	
+	public GalleryVo getImg(int no) {
+		
+		return sqlSession.selectOne("gallery.getImg", no);
+	}
+	
+	public int delete(int no) {
+		
+		return sqlSession.delete("gallery.delete", no);
+	}
 }

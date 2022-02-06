@@ -18,16 +18,42 @@
 	
 	<select id="getList" resultType="com.javaex.vo.GalleryVo">
 		<![CDATA[
-			select no,
-				   user_no userNo,
-				   content,
-				   filePath,
-				   orgName,
-				   saveName,
-				   fileSize
-			from   gallery
+			select ga.no,
+				   ga.user_no userNo,
+				   ue.name userName,
+				   ga.content,
+				   ga.filePath,
+				   ga.orgName,
+				   ga.saveName,
+				   ga.fileSize
+			from   gallery ga, users ue
+			where  ga.user_no = ue.no
 			order by no desc
 		]]>
 	</select>
+	
+	<select id="getImg" resultType="com.javaex.vo.GalleryVo" parameterType="int">
+		<![CDATA[
+			select ga.no,
+				   ga.user_no userNo,
+				   ue.name userName,
+				   ga.content,
+				   ga.filePath,
+				   ga.orgName,
+				   ga.saveName,
+				   ga.fileSize
+			from   gallery ga, users ue
+			where  ga.user_no = ue.no
+			and	   ga.no = #{no}
+			order by no desc
+		]]>
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		<![CDATA[
+			delete from gallery
+			where  no = #{no}
+		]]>
+	</delete>
 	
 </mapper>
