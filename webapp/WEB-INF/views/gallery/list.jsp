@@ -158,8 +158,6 @@ $("#btnImgUpload").on("click", function(){
 	$('#addModal').modal('show');
 });
 
-//모달창의 등록버튼을 클릭했을때
-$()
 
 
 </script>

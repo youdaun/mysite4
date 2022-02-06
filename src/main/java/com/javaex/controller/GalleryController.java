@@ -45,5 +45,14 @@ public class GalleryController {
 
 		return "gallery/list";
 	}
+	
+	// 이미지 등록
+	@RequestMapping("/upload")
+	public String upload() {
+		System.out.println("GalleryController.upload()");
+		
+		
+		return "";
+	}
 
 }
