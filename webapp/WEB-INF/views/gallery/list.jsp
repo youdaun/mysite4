@@ -179,7 +179,8 @@
 	});
 	
 	//삭제버튼 눌렀을때(이미지보기)
-	$("#delBtn").on("click", function() {
+	$("#btnDel").on("click", function() {
+		console.log("dd");
 		var no = $("#listNo").val();
 		deleteImg(no);
 	});
