@@ -4,16 +4,51 @@
 <mapper namespace="board">
 
 	<select id="getList" resultType="com.javaex.vo.BoardVo">
-		select bo.no
-       		   ,title
-       		   ,content
-       		   ,hit
-       		   ,to_char(reg_date, 'yy-mm-dd hh24:mi') regDate
-       		   ,user_no userNo
-       		   ,ue.name userName
-		from   board bo, users ue
-		where  bo.user_no = ue.no
-		order by reg_date desc
+		<![CDATA[
+			select bo.no
+	       		   ,title
+	       		   ,content
+	       		   ,hit
+	       		   ,to_char(reg_date, 'yy-mm-dd hh24:mi') regDate
+	       		   ,user_no userNo
+	       		   ,ue.name userName
+			from   board bo, users ue
+			where  bo.user_no = ue.no
+			order by reg_date desc
+		]]>
+	</select>
+	
+	<select id="getList2" resultType="com.javaex.vo.BoardVo" parameterType="map">
+		<![CDATA[
+			select rt.rn,
+				   rt.no,
+			       rt.title,
+			       rt.content,
+			       rt.hit,
+			       rt.regdate,
+			       rt.userno,
+			       rt.username
+			from  (select rownum rn,
+						  ot.no,
+			              ot.title,
+			              ot.content,
+			              ot.hit,
+			              ot.regdate,
+			              ot.userNo,
+			              ot.userName
+			       from (select b.no,
+			                    b.title,
+			                    b.content,
+			                    b.hit,
+			                    to_char(b.reg_date, 'YYYY-MM-DD HH:MI:SS') regDate,  
+			                    b.user_no userNo,
+			                    u.name userName
+			             from board b, users u
+			             where b.user_no = u.no
+			             order by b.no desc) ot) rt
+			where rn >= #{startRnum}
+			and rn <= #{endRnum}
+		]]>
 	</select>
 	
 	<select id="read" resultType="com.javaex.vo.BoardVo">
@@ -52,6 +87,14 @@
 		where  no = #{no}
 	</update>
 	
+	<!-- 전체 글갯수 카운트 -->
+	<select id="totalCnt" resultType="int">
+		<![CDATA[
+			select count(*)
+			from   board b, users u
+			where  b.user_no = u.no
+		]]>
+	</select>
 	
 	
 </mapper>
